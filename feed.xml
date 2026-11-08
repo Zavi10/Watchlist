@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+  <channel>
+    <title>Syncplay Movie Watchlist</title>
+    <link>http://192.168.1.200</link>
+    <description>Feed RSS automatico per i film da scaricare insieme</description>
+    <docs>http://www.rssboard.org/rss-specification</docs>
+    <generator>python-feedgen</generator>
+    <language>it</language>
+    <lastBuildDate>Sun, 08 Nov 2026 09:20:24 +0000</lastBuildDate>
+    <item>
+      <title>Resident Evil</title>
+      <link>magnet:?xt=urn:btih:e201f41208cdc9b238a2c3b6db87089d63e6db86&amp;dn=Torrentio%0A1080p</link>
+      <description>Download automatico per: Resident Evil</description>
+      <guid isPermaLink="false">magnet:?xt=urn:btih:e201f41208cdc9b238a2c3b6db87089d63e6db86&amp;dn=Torrentio%0A1080p</guid>
+    </item>
+    <item>
+      <title>Primetime</title>
+      <link>magnet:?xt=urn:btih:ce8bb595085300d7f1eec332a97b8d809a6be224&amp;dn=Torrentio%0A1080p</link>
+      <description>Download automatico per: Primetime</description>
+      <guid isPermaLink="false">magnet:?xt=urn:btih:ce8bb595085300d7f1eec332a97b8d809a6be224&amp;dn=Torrentio%0A1080p</guid>
+    </item>
+  </channel>
+</rss>
