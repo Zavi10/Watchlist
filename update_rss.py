@@ -1,32 +1,40 @@
-name: Aggiorna RSS Watchlist
+import os
+from feedgen.feed import FeedGenerator
 
-on:
-  push:
-    paths:
-      - 'watchlist.txt'
+WATCHLIST_FILE = "watchlist.txt"
+RSS_OUTPUT = "feed.xml"
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout del codice
-        uses: actions/checkout@v4
+def generate_rss():
+    fg = FeedGenerator()
+    fg.id('http://192.168.1.200/watchlist-rss') # O il tuo dominio/IP locale o DuckDNS
+    fg.title('Syncplay Movie Watchlist')
+    fg.link(href='http://192.168.1.200', rel='alternate')
+    fg.description('Feed RSS automatico per i film da scaricare insieme')
+    fg.language('it')
 
-      - name: Configura Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
+    if not os.path.exists(WATCHLIST_FILE):
+        print(f"File {WATCHLIST_FILE} non trovato.")
+        return
 
-      - name: Installa dipendenze
-        run: pip install feedgen
+    with open(WATCHLIST_FILE, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
 
-      - name: Esegui script di generazione RSS
-        run: python update_rss.py
+    for line in lines:
+        if '|' not in line or line.startswith('#'):
+            continue
+        
+        title, magnet = line.strip().split('|', 1)
+        title = title.strip()
+        magnet = magnet.strip()
 
-      - name: Configura Git per il commit automatico
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add feed.xml
-          git commit -m "Aggiornamento automatico feed RSS [skip ci]" || exit 0
-          git push
+        fe = fg.add_item()
+        fe.id(magnet)
+        fe.title(title)
+        fe.link(href=magnet)
+        fe.description(f"Download automatico per: {title}")
+
+    fg.rss_file(RSS_OUTPUT, pretty=True)
+    print(f"Feed RSS aggiornato con successo: {RSS_OUTPUT}")
+
+if __name__ == '__main__':
+    generate_rss()
